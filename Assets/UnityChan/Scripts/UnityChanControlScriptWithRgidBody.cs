@@ -63,14 +63,15 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 		orgColHight = col.height;
 		orgVectColCenter = col.center;
 }
-	
-	
-// 以下、メイン処理.リジッドボディと絡めるので、FixedUpdate内で処理を行う.
-	void FixedUpdate ()
+
+
+    // 以下、メイン処理.リジッドボディと絡めるので、FixedUpdate内で処理を行う.
+    /*void FixedUpdate ()
 	{
-		float h = Input.GetAxis("Horizontal");				// 入力デバイスの水平軸をhで定義
-		float v = Input.GetAxis("Vertical");				// 入力デバイスの垂直軸をvで定義
-		anim.SetFloat("Speed", v);							// Animator側で設定している"Speed"パラメタにvを渡す
+        float h = Input.GetAxis("Horizontal");				// 入力デバイスの水平軸をhで定義
+        float v = Input.GetAxis("Vertical");				// 入力デバイスの垂直軸をvで定義
+        print(h);
+        anim.SetFloat("Speed", v);							// Animator側で設定している"Speed"パラメタにvを渡す
 		anim.SetFloat("Direction", h); 						// Animator側で設定している"Direction"パラメタにhを渡す
 		anim.speed = animSpeed;								// Animatorのモーション再生速度に animSpeedを設定する
 		currentBaseState = anim.GetCurrentAnimatorStateInfo(0);	// 参照用のステート変数にBase Layer (0)の現在のステートを設定する
@@ -92,7 +93,7 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 		if (Input.GetButtonDown("Jump")) {	// スペースキーを入力したら
 
 			//アニメーションのステートがLocomotionの最中のみジャンプできる
-			if (currentBaseState.nameHash == locoState){
+			if (currentBaseState.fullPathHash == locoState){
 				//ステート遷移中でなかったらジャンプできる
 				if(!anim.IsInTransition(0))
 				{
@@ -113,7 +114,7 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 		// 以下、Animatorの各ステート中での処理
 		// Locomotion中
 		// 現在のベースレイヤーがlocoStateの時
-		if (currentBaseState.nameHash == locoState){
+		if (currentBaseState.fullPathHash == locoState){
 			//カーブでコライダ調整をしている時は、念のためにリセットする
 			if(useCurves){
 				resetCollider();
@@ -121,7 +122,7 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 		}
 		// JUMP中の処理
 		// 現在のベースレイヤーがjumpStateの時
-		else if(currentBaseState.nameHash == jumpState)
+		else if(currentBaseState.fullPathHash == jumpState)
 		{
 			cameraObject.SendMessage("setCameraPositionJumpView");	// ジャンプ中のカメラに変更
 			// ステートがトランジション中でない場合
@@ -162,7 +163,7 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 		}
 		// IDLE中の処理
 		// 現在のベースレイヤーがidleStateの時
-		else if (currentBaseState.nameHash == idleState)
+		else if (currentBaseState.fullPathHash == idleState)
 		{
 			//カーブでコライダ調整をしている時は、念のためにリセットする
 			if(useCurves){
@@ -175,7 +176,7 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 		}
 		// REST中の処理
 		// 現在のベースレイヤーがrestStateの時
-		else if (currentBaseState.nameHash == restState)
+		else if (currentBaseState.fullPathHash == restState)
 		{
 			//cameraObject.SendMessage("setCameraPositionFrontView");		// カメラを正面に切り替える
 			// ステートが遷移中でない場合、Rest bool値をリセットする（ループしないようにする）
@@ -185,7 +186,7 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 			}
 		}
 	}
-
+    
 	void OnGUI()
 	{
 		GUI.Box(new Rect(Screen.width -260, 10 ,250 ,150), "Interaction");
@@ -196,10 +197,10 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 		GUI.Label(new Rect(Screen.width -245,110,250,30),"Left Control : Front Camera");
 		GUI.Label(new Rect(Screen.width -245,130,250,30),"Alt : LookAt Camera");
 	}
+    */
 
-
-	// キャラクターのコライダーサイズのリセット関数
-	void resetCollider()
+    // キャラクターのコライダーサイズのリセット関数
+    void resetCollider()
 	{
 	// コンポーネントのHeight、Centerの初期値を戻す
 		col.height = orgColHight;
