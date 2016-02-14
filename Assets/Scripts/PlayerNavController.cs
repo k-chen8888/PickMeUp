@@ -16,8 +16,6 @@ public class PlayerNavController : MonoBehaviour {
 
     Vector2 smoothDeltaPosition = Vector2.zero;
     Vector2 velocity = Vector2.zero;
-    private float nextJump;
-    private bool isJumping = false;
 
 
     // Use this for initialization
@@ -26,7 +24,6 @@ public class PlayerNavController : MonoBehaviour {
         animAgent = GetComponent<Animator>();
         Static = this;
         destination = initialPosition;
-        nextJump = Time.time;
     }
 
     // Update is called once per frame
@@ -36,35 +33,7 @@ public class PlayerNavController : MonoBehaviour {
             nmAgent.SetDestination(destination);
 
             // Update animation parameters
-            AnimateLogic.Static.AnimateNavMesh(Vector3.Distance(transform.position, destination) > 0.5f, false);
-            if (nmAgent.isOnOffMeshLink && !isJumping)
-            {
-                isJumping = true;
-            }
-            else
-            {
-                nmAgent.CompleteOffMeshLink();
-                nmAgent.Resume();
-                isJumping = false;
-            }
-            /*
-            if (nmAgent.isOnOffMeshLink && nextJump > Time.time && !isJumping)
-            {
-                nextJump = Time.time + 1.0f;
-                isJumping = true;
-                AnimateLogic.Static.AnimateNavMesh(Vector3.Distance(transform.position, destination) > 0.5f, true);
-            }
-            else
-            {
-                AnimateLogic.Static.AnimateNavMesh(Vector3.Distance(transform.position, destination) > 0.5f, false);
-
-                if (Time.time > nextJump && isJumping)
-                {
-                    nmAgent.CompleteOffMeshLink();
-                    nmAgent.Resume();
-                    isJumping = false;
-                }
-            }*/
+            AnimateLogic.Static.AnimateNavMesh(nmAgent);
         }
     }
 

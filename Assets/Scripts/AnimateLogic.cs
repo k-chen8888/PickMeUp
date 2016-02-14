@@ -25,6 +25,8 @@ public class AnimateLogic : MonoBehaviour {
 
     private bool reset = false;
     private bool jump = false;
+    private float nextJump;
+    private bool isJumping = false;
 
     void Start()
     {
@@ -37,11 +39,21 @@ public class AnimateLogic : MonoBehaviour {
         Static = this;
     }
 
-    public void AnimateNavMesh(bool moving, bool jumping)
+    public void AnimateNavMesh(NavMeshAgent nmAgent)
     {
-        if (moving)
+        if (nmAgent.isOnOffMeshLink && !isJumping)
         {
-            jump = jumping;
+            isJumping = true;
+        }
+        else
+        {
+            nmAgent.CompleteOffMeshLink();
+            nmAgent.Resume();
+            isJumping = false;
+        }
+
+        if (Vector3.Distance(transform.position, nmAgent.destination) > 0.5f)
+        {
             Animate(0.0f, 0.5f);
             reset = true;
         }
