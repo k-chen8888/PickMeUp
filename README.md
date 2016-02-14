@@ -1,2 +1,2 @@
 # PickMeUp
-MOBA-style maze game
+Maze game to demo NavMesh plugin
