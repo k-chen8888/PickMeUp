@@ -24,6 +24,7 @@ public class AnimateLogic : MonoBehaviour {
     static int restState = Animator.StringToHash("Base Layer.Rest");
 
     private bool reset = false;
+    private bool jump = false;
 
     void Start()
     {
@@ -36,10 +37,11 @@ public class AnimateLogic : MonoBehaviour {
         Static = this;
     }
 
-    public void AnimateNavMesh(bool moving)
+    public void AnimateNavMesh(bool moving, bool jumping)
     {
         if (moving)
         {
+            jump = jumping;
             Animate(0.0f, 0.5f);
             reset = true;
         }
@@ -74,7 +76,7 @@ public class AnimateLogic : MonoBehaviour {
             velocity *= settings.backwardSpeed;  // 移動速度を掛ける
         }
 
-        if (Input.GetButtonDown("Jump"))
+        if (jump)
         {   // スペースキーを入力したら
 
             //アニメーションのステートがLocomotionの最中のみジャンプできる
@@ -87,6 +89,8 @@ public class AnimateLogic : MonoBehaviour {
                     anim.SetBool("Jump", true);     // Animatorにジャンプに切り替えるフラグを送る
                 }
             }
+
+            jump = false;
         }
 
 
