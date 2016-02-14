@@ -23,6 +23,8 @@ public class AnimateLogic : MonoBehaviour {
     static int jumpState = Animator.StringToHash("Base Layer.Jump");
     static int restState = Animator.StringToHash("Base Layer.Rest");
 
+    private bool reset = false;
+
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -37,9 +39,15 @@ public class AnimateLogic : MonoBehaviour {
     public void AnimateNavMesh(bool moving)
     {
         if (moving)
+        {
             Animate(0.0f, 0.5f);
-        else
+            reset = true;
+        }
+        else if (reset)
+        {
             Animate(0.0f, 0.0f);
+            reset = false;
+        }
     }
 
     private void Animate(float h, float v)
